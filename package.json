@@ -1,0 +1,20 @@
+{
+  "name": "blogSystem",
+  "version": "1.0.0",
+  "description": "项目名:blogSystem(博客系统)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YuGYAO/blogSystem.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/YuGYAO/blogSystem/issues"
+  },
+  "homepage": "https://github.com/YuGYAO/blogSystem#readme"
+}
