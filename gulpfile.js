@@ -6,13 +6,13 @@
 const gulp=require('gulp');
 
 //压缩js
-// const uglify=require('gulp-uglify');
+const uglify=require('gulp-uglify');
 
 // 压缩css
-// const minifyCss=require('gulp-minify-css');
+const minifyCss=require('gulp-minify-css');
 
 //压缩html
-// const minifyHtml=require('gulp-minify-html');
+const minifyHtml=require('gulp-minify-html');
 
 //压缩图片
 // const imagemin=require('gulp-imagemin');
@@ -21,10 +21,10 @@ const gulp=require('gulp');
 const sass=require('gulp-sass');
 
 //文件合并(js,css)
-// const concat=require('gulp-concat');
+const concat=require('gulp-concat');
 
 //重命名
-// const rename=require('gulp-rename');
+const rename=require('gulp-rename');
 
 //ES6转ES5
 const babel=require('gulp-babel');
@@ -47,7 +47,7 @@ const clean=require('gulp-clean');
 var server =require('browser-sync').create();//执行函数返回对象
 
 //自动加载
-//const load=require('gulp-load-plugins')();//立即执行之后得到一个加载对象
+const load=require('gulp-load-plugins')();//立即执行之后得到一个加载对象
 
 //====================================gulp创建任务====================================
 
