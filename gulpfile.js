@@ -43,6 +43,10 @@ const clean = require('gulp-clean');
 //网页自动刷新
 var webserver = require('gulp-webserver');
 
+
+//引入mockData.js
+const mockData=require('./dist/static/data/mockData.js');
+
 //======================================创建任务==================================
 //=====取得js文件->错误处理->合并js文件->压缩js->放到指定位置(只做了最后一步)=====
 gulp.task('js',function(){
@@ -56,6 +60,16 @@ gulp.task('js',function(){
   // .pipe(uglify())
   //将合并压缩后的文件输出到dist/static/scripts下(如没有dist目录则自动生成dist)
   .pipe(gulp.dest('dist/static/scripts'))
+});
+
+//=====取data下的js文件
+gulp.task('data',function(){
+  //取得data下所有为.js的文件(**/的意思是包含所有子文件夹)
+  gulp.src('app/static/data/**/*.js')
+  //错误管理模块(有错误时会自动输出提示到终端上)
+  .pipe(plumber())
+  //将合并压缩后的文件输出到dist/static/data下(如没有dist目录则自动生成dist)
+  .pipe(gulp.dest('dist/static/data'))
 });
 
 //=====取得php文件->错误处理->放到指定位置
@@ -131,20 +145,15 @@ gulp.task('webserver', function() {
   gulp.src('./')//该文件夹是服务器的根路径
     .pipe(webserver({
       host:'192.168.0.104',//设置我的ip地址
-      port:'8070',//端口号
+      port:'9500',//端口号
       livereload: true,//热更新,自动刷新浏览器
       directoryListing: true,//是否展示文件夹列表
-      open: true,//是否打开浏览器
+      open: false,//是否打开浏览器
       // fallback:xxx,//使用错误的地址时,打开文件
       //中间件,相当于拦截本地与服务器连接的工具,请求会被中断,无法响应
-      // middleware:function(request,response,next){
-      //   if (request.url==='/hello') {
-      //     response.end('hello world');//不管你怎么打开,都只能看到hello world
-      //   }
-      //   else{
-      //     next();
-      //   }
-      // }
+      middleware:mockData
+      
+
     }));
 });
 
@@ -152,6 +161,7 @@ gulp.task('webserver', function() {
 gulp.task('watch', function(){
   //监听各个目录的文件，如果有变动则执行相应的任务操作文件
   gulp.watch('app/static/scripts/**/*.js',['js']);
+  gulp.watch('app/static/data/**/*.js',['js']);
   gulp.watch('app/static/sass/**/*.scss',['sass']);
   gulp.watch('app/static/php/**/*.php',['php']);
   gulp.watch('app/views/**/*.html',['html']);
@@ -163,7 +173,7 @@ gulp.task('redist', function(){
   //先运行clean，然后并行运行html,js,sass,images,watch
   //如果不使用gulp-run-sequence插件的话，由于gulp是并行执行的
   //有可能会出现一种情况（其他文件处理速度快的已经处理完了，然后clean最后才执行，会把前面处理完的文件删掉，所以要用到runSequence）
-  runSequence('webserver',['html', 'sass','php','js','images'],'watch')
+  runSequence('webserver',['html', 'sass','php','js','data','images'],'watch')
 })
 
 //在终端上输入gulp命令，会默认执行default任务，并执行redist任务
